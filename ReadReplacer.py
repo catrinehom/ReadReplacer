@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Thu Dec 12 10:36:28 2019
-
-@author: catrinehom
+Program: ReadReplacer
+Description: This program can replace a subset of reads in a fastq file.
+Version: 1.0
+Author: Catrine Ahrens Høm
 """
 
 
@@ -37,16 +38,15 @@ def CheckFastq(filenames):
     """
     fastq_type = "@"
 
-    # Open all files and get the first character
-    for infile in filenames:
-        f = OpenFile(infile, "r")
-        first_char = f.read(1);
-        f.close()
-        # Check if fastq
-        if first_char == fastq_type:
-            fastq = True
-        else:
-            fastq = False
+    # Open file and get the first character
+    f = OpenFile(filenames, "r")
+    first_char = f.read(1);
+    f.close()
+    # Check if fastq
+    if first_char == fastq_type:
+        fastq = True
+    else:
+        fastq = False
     return fastq
 
 
@@ -77,21 +77,24 @@ args = parser.parse_args()
 ###########################################################################
 
 # Define input as variables
-if args.all_fastq is None:
+if args.all_fastq is not None:
     all_fastq_filename = args.all_fastq
 else:
+    #all_fastq_filename = './test.fastq'
     message = '-a option is missing. Please input a file with all fastq reads.'
     sys.exit(message)
     
-if args.high_quality_fastq is None:
+if args.high_quality_fastq is not None:
     high_quality_fastq_filename = args.high_quality_fastq
 else:
+    #high_quality_fastq_filename = './test_HAC.fastq'
     message = '-q option is missing. Please input a file with fastq reads to replace in all fastq file.'
     sys.exit(message)
     
-if args.outfilename is None:
+if args.outfilename is not None:
     outfilename = args.outfilename
 else:
+    #outfilename = './final.fastq'
     message = '-o option is missing. Please input a output filename.'
     sys.exit(message)
     
@@ -116,11 +119,11 @@ h_check_fastq = CheckFastq(high_quality_fastq_filename)
 
 # Exit if the input files are not in fastq format
 if a_check_fastq is False:
-    message = "Input Error: {} is a wrong format. Should be fasta format.".format(all_fastq_filename)
+    message = "Input Error: {} is a wrong format. Should be fastq format.".format(all_fastq_filename)
     sys.exit(message)
 
 if h_check_fastq is False:
-    message = "Input Error: {} is a wrong format. Should be fasta format.".format(high_quality_fastq_filename)
+    message = "Input Error: {} is a wrong format. Should be fastq format.".format(high_quality_fastq_filename)
     sys.exit(message)
 
 # Start runtimer for program
