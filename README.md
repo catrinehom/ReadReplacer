@@ -45,6 +45,6 @@ mv ReadReplacer.py /usr/local/bin/
 To run full pipeline:
 
 ```
-./ReadReplacer.py [-a <fastq filename (all reads)>] [-q <fastq filename (reads to replace)>] [-o <output filename>]
+python3 ReadReplacer.py [-a <fastq filename (all reads)>] [-q <fastq filename (reads to replace)>] [-o <output filename>]
 ```
 
